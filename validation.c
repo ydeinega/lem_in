@@ -50,43 +50,41 @@ int		check_link_str(char *line)
 	name = 0;
 	while (line[++i])
 	{
-		if ((i == 0 || (i > 0 && line[i - 1] == '-'))
-			&& line[i] != '#' && line[i] != 'L')
-			name++;
+		if (i == 0 || (i > 0 && line[i - 1] == '-'))
+		{
+			if (line[i] != '#' && line[i] != 'L')
+				name++;
+			else
+				return (0);
+		}
 	}
-	return (1);
+	return (name == 2 ? 1 : 0);
 }
 
 int		room_valid(char *line, t_lem_in *game, int *type)
 {
-	if (*type == LINK || !check_room_str(line))
+	if (*type == LINK || !check_room_str(line) || !game->ants)
 		return (0);
-	if (*type == ANTS)
-	{
-		if (game->ants == 0)
-			return (0);
-		*type = ROOM;
+	//if (!game->node)
 		//create head for node
-	}
-	else
-	{
-		if (!game->node)
-			return (0);
+	//else
 		//create lst element and push it to the beginning of the list
-	}
+	*type = ROOM;
 	return (1);
 }
 
 int		link_valid(char *line, t_lem_in *game, int *type)
 {
-	if (*type == ANTS || !check_link_str(line))
+	if (*type == ANTS || *type == START || *type == END || !check_link_str(line))
 		return (0);
 	if (*type != LINK)
 	{
 		if (!game->start || !game->end)
 			return (0);
+		*type = LINK;
 		//create array instead of list
-	}	
+	}
+	//add info to the array
 	return (1);
 }
 
@@ -95,7 +93,7 @@ int		ants_valid(char *line, t_lem_in *game, int *type)
 	int i;
 
 	i = -1;
-	if (*type != ANTS && game->ants != 0)
+	if (*type != ANTS || game->ants != 0)
 		return (0);
 	while (line[++i])
 	{
@@ -108,5 +106,19 @@ int		ants_valid(char *line, t_lem_in *game, int *type)
 
 int		command_valid(char *line, t_lem_in *game, int *type)
 {
+	if (ft_strequ(line, "##start"))
+	{
+		if (*type == LINK || game->start != 0 || !game->ants)
+			return (0);
+		*type = START;
+		game->start = 1;
+	}
+	if (ft_strequ(line, "##end"))
+	{
+		if (*type == LINK || game->end != 0 || !game->ants)
+			return (0);
+		*type = END;
+		game->end = 1;
+	}
 	return (1);
 }
