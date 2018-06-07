@@ -15,34 +15,52 @@
 # include "./libft/libft.h"
 # define START 1
 # define END 2
+# define ANTS 0
+# define ROOM 3
+# define LINK 4
 
-typedef struct	s_coord
+typedef struct			s_coord
 {
-	int			i;
-	int			j;
-}				t_coord;
+	int					i;
+	int					j;
+}						t_coord;
 
-typedef struct	s_lem_in
+typedef struct			s_lst
 {
-	int			ants;
-	int			room_num;
-	int			start;
-	int			end;
-	t_matrix	*rooms;
-}				t_lem_in;
+	int					num;
+	int					dst;
+	struct s_lst		*next;
+}						t_lst;
 
-typedef struct	s_matrix
+typedef struct			s_room_lst
 {
-	char		*name;
-	t_coord		pt;
-	int			type;
-	t_lst		*links;
-}				t_matrix;
+	char				*name;
+	t_coord				pt;
+	int					type;
+	struct s_room_lst	*next;
+}						t_room_lst;
 
-typedef struct	s_lst
+typedef struct			s_room_ar
 {
-	t_matrix	*room;
-	int			dst;
-}
+	char				*name;
+	t_lst				*links;
+}						t_room_ar;
 
+typedef struct			s_lem_in
+{
+	int					ants;
+	int					room_num;
+	int					start;
+	int					end;
+	t_room_lst			*node;
+	t_room_ar			*room;
+}						t_lem_in;
+
+int						reading_lem_in(char *line, t_lem_in *game, int *type);
+int						room_valid(char *line, t_lem_in *game, int *type);
+int						check_room_str(char *line);
+int						link_valid(char *line, t_lem_in *game, int *type);
+int						check_link_str(char *line);
+int						ants_valid(char *line, t_lem_in *game, int *type);
+int						command_valid(char *line, t_lem_in *game, int *type);
 #endif
