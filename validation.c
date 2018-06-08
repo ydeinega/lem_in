@@ -63,13 +63,27 @@ int		check_link_str(char *line)
 
 int		room_valid(char *line, t_lem_in *game, int *type)
 {
+	t_room_lst	*node;
+
+	node = NULL;
 	if (*type == LINK || !check_room_str(line) || !game->ants)
 		return (0);
-	//if (!game->node)
-		//create head for node
-	//else
-		//create lst element and push it to the beginning of the list
-	*type = ROOM;
+	if (!game->node)
+		game->node = create_node(line, type);
+	else
+	{
+		node = create_node(line, type);
+		if (!add_node_lst(&(game->node), node))
+			return (0);
+	}
+	node = game->node;
+	while (node)
+	{
+		ft_printf("name = |%s|\n", node->name);
+		ft_printf("point = (%i,%i)\n", node->pt.i, node->pt.j);
+		ft_printf("type = %i\n", node->type);
+		node = node->next;
+	}
 	return (1);
 }
 

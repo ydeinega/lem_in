@@ -63,4 +63,6 @@ int						link_valid(char *line, t_lem_in *game, int *type);
 int						check_link_str(char *line);
 int						ants_valid(char *line, t_lem_in *game, int *type);
 int						command_valid(char *line, t_lem_in *game, int *type);
+t_room_lst				*create_node(char *line, int *type);
+int						add_node_lst(t_room_lst **head, t_room_lst *node);
 #endif
