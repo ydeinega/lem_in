@@ -28,7 +28,7 @@ typedef struct			s_coord
 typedef struct			s_lst
 {
 	int					num;
-	int					dst;
+	//int					dst;
 	struct s_lst		*next;
 }						t_lst;
 
@@ -43,6 +43,7 @@ typedef struct			s_room_lst
 typedef struct			s_room_ar
 {
 	char				*name;
+	t_coord				pt;
 	t_lst				*links;
 }						t_room_ar;
 
@@ -65,4 +66,5 @@ int						ants_valid(char *line, t_lem_in *game, int *type);
 int						command_valid(char *line, t_lem_in *game, int *type);
 t_room_lst				*create_node(char *line, int *type);
 int						add_node_lst(t_room_lst **head, t_room_lst *node);
+void					create_room_array(t_lem_in *game);
 #endif

@@ -76,14 +76,15 @@ int		room_valid(char *line, t_lem_in *game, int *type)
 		if (!add_node_lst(&(game->node), node))
 			return (0);
 	}
-	node = game->node;
-	while (node)
-	{
-		ft_printf("name = |%s|\n", node->name);
-		ft_printf("point = (%i,%i)\n", node->pt.i, node->pt.j);
-		ft_printf("type = %i\n", node->type);
-		node = node->next;
-	}
+	game->room_num++;
+	// node = game->node;
+	// while (node)
+	// {
+	// 	ft_printf("name = |%s| ", node->name);
+	// 	ft_printf("point = (%i,%i) ", node->pt.i, node->pt.j);
+	// 	ft_printf("type = %i\n", node->type);
+	// 	node = node->next;
+	// }
 	return (1);
 }
 
@@ -96,7 +97,15 @@ int		link_valid(char *line, t_lem_in *game, int *type)
 		if (!game->start || !game->end)
 			return (0);
 		*type = LINK;
+		create_room_array(game);
 		//create array instead of list
+		int i = 0;
+		while (i < game->room_num)
+		{
+			ft_printf("i = %i name = %s pt = (%i, %i)\n", i, game->room[i].name, game->room[i].pt.i, game->room[i].pt.j);
+			i++;
+		}
+		ft_printf("start = %i end = %i\n", game->start, game->end);
 	}
 	//add info to the array
 	return (1);

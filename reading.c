@@ -14,29 +14,28 @@
 
 int		reading_lem_in(char *line, t_lem_in *game, int *type)
 {
-	if (line[0] != '#')
+	char	*ptr;
+
+	ptr = ft_strtrim(line);
+	if (ptr[0] != '#')
 	{
-		if (ft_strchr(line, ' '))
+		if (ft_strchr(ptr, ' '))
 		{
-			if (!room_valid(line, game, type))
+			if (!room_valid(ptr, game, type))
 				return (0);
 		}
-		else if (ft_strchr(line, '-'))
+		else if (ft_strchr(ptr, '-'))
 		{
-			if (!link_valid(line, game, type))
+			if (!link_valid(ptr, game, type))
 				return (0);
 		}
-		else
-		{
-			if (!ants_valid(line, game, type))
-				return (0);
-		}
-	}
-	else
-	{
-		if (!command_valid(line, game, type))
+		else if (!ants_valid(ptr, game, type))
 			return (0);
 	}
+	else if (!command_valid(ptr, game, type))
+		return (0);
+	if (ptr)
+		free (ptr);
 	return (1);
 }
 
@@ -52,6 +51,7 @@ int		main(void)
 	game->ants = 0;
 	game->start = 0;
 	game->end = 0;
+	game->room_num = 0;
 	type = ANTS;
 	while (get_next_line(0, &line))
 	{
