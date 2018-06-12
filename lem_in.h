@@ -67,4 +67,7 @@ int						command_valid(char *line, t_lem_in *game, int *type);
 t_room_lst				*create_node(char *line, int *type);
 int						add_node_lst(t_room_lst **head, t_room_lst *node);
 void					create_room_array(t_lem_in *game);
+int						manage_links(t_lem_in *game, char *line);
+int						check_links(t_lem_in *game, char *name1, char *name2);
+int						add_links(t_room_ar *room, int n1, int n2);
 #endif

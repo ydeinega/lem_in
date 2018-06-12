@@ -98,16 +98,36 @@ int		link_valid(char *line, t_lem_in *game, int *type)
 			return (0);
 		*type = LINK;
 		create_room_array(game);
-		//create array instead of list
-		int i = 0;
+		// int i = 0;
+		// while (i < game->room_num)
+		// {
+		// 	ft_printf("i = %i name = %s pt = (%i, %i)\n", i, game->room[i].name, game->room[i].pt.i, game->room[i].pt.j);
+		// 	i++;
+		// }
+		// ft_printf("start = %i end = %i\n", game->start, game->end);
+	}
+	if (!manage_links(game, line))
+		return (0);
+	//add info to the array
+	int i = 0;
+	t_lst *tmp;
 		while (i < game->room_num)
 		{
-			ft_printf("i = %i name = %s pt = (%i, %i)\n", i, game->room[i].name, game->room[i].pt.i, game->room[i].pt.j);
+			ft_printf("\ni = %i name = %s pt = (%i, %i)\n", i, game->room[i].name, game->room[i].pt.i, game->room[i].pt.j);
+			if (game->room[i].links)
+			{
+				ft_printf("LINKS\n");
+				tmp = game->room[i].links;
+				while (tmp)
+				{
+					ft_printf("%i ", tmp->num);
+					tmp = tmp->next;
+				}
+				ft_printf("\n");
+			}
 			i++;
 		}
 		ft_printf("start = %i end = %i\n", game->start, game->end);
-	}
-	//add info to the array
 	return (1);
 }
 
