@@ -73,23 +73,32 @@ int			main(void)
 	char		*line;
 	t_lem_in	*game;
 	int			type;
+	int			ret;
 
 	if (!(game = create_game()))
+	{
 		ft_printf("ERROR\n");
+		return (0);
+	}
 	type = ANTS;
-	while (get_next_line(0, &line))//проверка на вход папки!!! что возвращает гнл при ошибке?
+	while ((ret = get_next_line(0, &line)) > 0)//проверка на вход папки!!! что возвращает гнл при ошибке?
 	{
 		if (!reading_lem_in(line, game, &type))
 		{
 			ft_printf("ERROR\n");
 			clean_game(game);
-			ft_strdel(&line);//???
-			return (0);//return error
+			ft_strdel(&line);
+			return (0);
 		}
 		ft_strdel(&line);
 	}
-	ft_printf("line = %s\n", line);
-	ft_lstprint(&(game->info));
+	if (ret < 0)
+	{
+		ft_printf("ERROR\n");
+		clean_game(game);
+		return (0);
+	}
+	ft_lstprint(&(game->info));//check the func if it checks null as argument
 	/*
 	int i = 0;
 	t_lst *tmp;
