@@ -55,9 +55,12 @@ typedef struct			s_lem_in
 	int					end;
 	t_room_lst			*node;
 	t_room_ar			*room;
+	t_list				*info;
 }						t_lem_in;
 
 int						reading_lem_in(char *line, t_lem_in *game, int *type);
+t_lem_in				*create_game(void);
+void					add_info(t_lem_in *game, char *ptr);
 int						room_valid(char *line, t_lem_in *game, int *type);
 int						check_room_str(char *line);
 int						link_valid(char *line, t_lem_in *game, int *type);
@@ -70,4 +73,5 @@ void					create_room_array(t_lem_in *game);
 int						manage_links(t_lem_in *game, char *line);
 int						check_links(t_lem_in *game, char *name1, char *name2);
 int						add_links(t_room_ar *room, int n1, int n2);
+int						check_doubles(t_lem_in *game, int n1, int n2);
 #endif

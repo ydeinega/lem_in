@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-int		reading_lem_in(char *line, t_lem_in *game, int *type)
+int			reading_lem_in(char *line, t_lem_in *game, int *type)
 {
 	char	*ptr;
 
@@ -34,26 +34,50 @@ int		reading_lem_in(char *line, t_lem_in *game, int *type)
 	}
 	else if (!command_valid(ptr, game, type))
 		return (0);
+	add_info(game, ptr);
 	if (ptr)
 		free (ptr);
 	return (1);
 }
 
-int		main(void)
+void		add_info(t_lem_in *game, char *ptr)
+{
+	t_list	*tmp;
+
+	tmp = ft_lstnew(ptr, ft_strlen(ptr) + 1);
+	if (game->info)
+		ft_lstaddb(&(game->info), tmp);
+	else
+		game->info = tmp;
+}
+
+t_lem_in	*create_game(void)
+{
+	t_lem_in	*game;
+
+	game = (t_lem_in *)malloc(sizeof(t_lem_in) * 1);
+	if (!game)
+		return (NULL);
+	game->ants = 0;
+	game->room_num = 0;
+	game->start = 0;
+	game->end = 0;
+	game->node = NULL;
+	game->room = NULL;
+	game->info = NULL;
+	return (game);
+}
+
+int			main(void)
 {
 	char		*line;
 	t_lem_in	*game;
 	int			type;
 
-	game = (t_lem_in *)malloc(sizeof(t_lem_in) * 1);
-	game->node = NULL;
-	game->room = NULL;
-	game->ants = 0;
-	game->start = 0;
-	game->end = 0;
-	game->room_num = 0;
+	if (!(game = create_game()))
+		ft_printf("ERROR\n");
 	type = ANTS;
-	while (get_next_line(0, &line))
+	while (get_next_line(0, &line))//проверка на вход папки!!! что возвращает гнл при ошибке?
 	{
 		if (!reading_lem_in(line, game, &type))
 		{
@@ -64,6 +88,29 @@ int		main(void)
 		}
 		ft_strdel(&line);
 	}
+	ft_printf("I'm here\n");
+	ft_lstprint(&(game->info));
+	///*
+	int i = 0;
+	t_lst *tmp;
+		while (i < game->room_num)
+		{
+			ft_printf("\ni = %i name = %s pt = (%i, %i)\n", i, game->room[i].name, game->room[i].pt.i, game->room[i].pt.j);
+			if (game->room[i].links)
+			{
+				ft_printf("LINKS\n");
+				tmp = game->room[i].links;
+				while (tmp)
+				{
+					ft_printf("%i ", tmp->num);
+					tmp = tmp->next;
+				}
+				ft_printf("\n");
+			}
+			i++;
+		}
+		ft_printf("start = %i end = %i\n", game->start, game->end);
+	//*/
 	//lem_in(game);
 	//clean_game(&game);
 }

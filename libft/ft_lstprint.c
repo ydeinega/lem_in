@@ -31,6 +31,7 @@ void	ft_lstprint(t_list **alst)
 				ft_putchar(tmp[i]);
 				i++;
 			}
+			ft_putchar('\n');
 			i = 0;
 			head = head->next;
 		}
