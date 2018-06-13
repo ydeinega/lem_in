@@ -68,6 +68,30 @@ t_lem_in	*create_game(void)
 	return (game);
 }
 
+void		clean_game(t_lem_in *game)
+{
+	t_room_lst	*head;
+	t_room_lst	*tmp;
+
+	head = NULL;
+	tmp = NULL;
+	if (game->node)
+	{
+		head = game->node;
+		while (head)
+		{
+			tmp = head;
+			ft_strdel(&(head->name));
+			head = head->next;
+			free (tmp);
+		}
+	}
+	if (game->room)
+	{
+		
+	}
+}
+
 int			main(void)
 {
 	char		*line;
@@ -82,7 +106,7 @@ int			main(void)
 		if (!reading_lem_in(line, game, &type))
 		{
 			ft_printf("ERROR\n");
-			//clean_game(&game);
+			//clean_game(game);
 			ft_strdel(&line);//???
 			return (0);//return error
 		}
@@ -90,7 +114,7 @@ int			main(void)
 	}
 	ft_printf("I'm here\n");
 	ft_lstprint(&(game->info));
-	///*
+	/*
 	int i = 0;
 	t_lst *tmp;
 		while (i < game->room_num)
@@ -110,7 +134,7 @@ int			main(void)
 			i++;
 		}
 		ft_printf("start = %i end = %i\n", game->start, game->end);
-	//*/
+	*/
 	//lem_in(game);
-	//clean_game(&game);
+	//clean_game(game);
 }
