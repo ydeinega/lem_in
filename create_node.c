@@ -79,7 +79,7 @@ void		create_room_array(t_lem_in *game)
 		i++;
 		tmp = head;
 		head = head->next;
-		free (tmp);
+		free(tmp);
 	}
 	game->node = NULL;
 }

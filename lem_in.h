@@ -28,7 +28,6 @@ typedef struct			s_coord
 typedef struct			s_lst
 {
 	int					num;
-	//int					dst;
 	struct s_lst		*next;
 }						t_lst;
 
@@ -72,6 +71,10 @@ int						add_node_lst(t_room_lst **head, t_room_lst *node);
 void					create_room_array(t_lem_in *game);
 int						manage_links(t_lem_in *game, char *line);
 int						check_links(t_lem_in *game, char *name1, char *name2);
-int						add_links(t_room_ar *room, int n1, int n2);
+int						add_link(t_room_ar *room, int n1, int n2);
 int						check_doubles(t_lem_in *game, int n1, int n2);
+void					clean_game(t_lem_in *game);
+void					clean_node(t_room_lst *node);
+void					clean_room(t_room_ar *room, int room_num);
+void					clean_info(t_list *info);
 #endif

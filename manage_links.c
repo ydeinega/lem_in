@@ -23,7 +23,6 @@ int			manage_links(t_lem_in *game, char *line)
 		i++;
 	name1 = ft_strsub(line, 0, i);
 	name2 = ft_strdup(&line[i + 1]);
-	//ft_printf("name1 = |%s|, name2 = |%s|\n", name1, name2);
 	if (!check_links(game, name1, name2))
 		return (0);
 	return (1);
@@ -43,22 +42,22 @@ int			check_links(t_lem_in *game, char *name1, char *name2)
 		n1 = ft_strequ(game->room[i].name, name1) ? i : n1;
 		n2 = ft_strequ(game->room[i].name, name2) ? i : n2;
 	}
-	free (name1);
-	free (name2);
+	free(name1);
+	free(name2);
 	if (n1 >= 0 && n2 >= 0)
 	{
-		if (n1 != n2 && check_doubles(game, n1, n2)) 
+		if (n1 != n2 && check_doubles(game, n1, n2))
 		{
-			if (!add_links(game->room, n1, n2) || !add_links(game->room, n2, n1))
+			if (!add_link(game->room, n1, n2) || !add_link(game->room, n2, n1))
 				return (0);
-		} 
+		}
 	}
 	else
 		return (0);
 	return (1);
 }
 
-int			add_links(t_room_ar *room, int n1, int n2)
+int			add_link(t_room_ar *room, int n1, int n2)
 {
 	t_lst	*link;
 
