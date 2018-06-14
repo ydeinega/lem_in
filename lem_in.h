@@ -61,6 +61,20 @@ typedef struct			s_lem_in
 	t_list				*info;
 }						t_lem_in;
 
+typedef struct			s_way
+{
+	int					room;
+	int					ant;
+	s_way				*next;
+}						t_way;
+
+typedef struct			s_bug
+{
+	int					ant;
+	int					room;
+	t_way				*turn;
+}						t_bug;
+
 int						reading_lem_in(char *line, t_lem_in *game, int *type);
 t_lem_in				*create_game(void);
 void					add_info(t_lem_in *game, char *ptr);
