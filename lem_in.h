@@ -47,7 +47,7 @@ typedef struct			s_room_ar
 	char				*name;
 	t_coord				pt;
 	t_lst				*links;
-	t_lst				*ways;//free ways and in the beginning set them to NULL
+	t_lst				*ways;
 }						t_room_ar;
 
 typedef struct			s_lem_in
@@ -56,11 +56,9 @@ typedef struct			s_lem_in
 	int					room_num;
 	int					start;
 	int					end;
-	//char				*visit;//set to NULL
 	t_room_lst			*node;
 	t_room_ar			*room;
 	t_list				*info;
-	//t_lst				*queue;//set to NULL
 }						t_lem_in;
 
 int						reading_lem_in(char *line, t_lem_in *game, int *type);
@@ -81,6 +79,10 @@ int						add_link(t_room_ar *room, int n1, int n2);
 int						check_doubles(t_lem_in *game, int n1, int n2);
 void					clean_game(t_lem_in *game);
 void					clean_node(t_room_lst *node);
-void					clean_room(t_room_ar *room, int room_num);//clean ways
+void					clean_room(t_room_ar *room, int room_num);
 void					clean_info(t_list *info);
+t_lst					*queue_elem(int num);
+void					add_to_queue(t_lst *elem, int end);
+void					add_to_ways(t_room_ar *room, int num);
+int						lem_in(t_lem_in *game);
 #endif

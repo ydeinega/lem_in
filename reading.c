@@ -99,7 +99,8 @@ int			main(void)
 		return (0);
 	}
 	ft_lstprint(&(game->info));//check the func if it checks null as argument
-	/*
+	if (!lem_in(game))
+		ft_printf("ERROR\n");
 	int i = 0;
 	t_lst *tmp;
 		while (i < game->room_num)
@@ -111,7 +112,15 @@ int			main(void)
 				tmp = game->room[i].links;
 				while (tmp)
 				{
-					ft_printf("%i ", tmp->num);
+					ft_printf("%s ", game->room[tmp->num].name);
+					tmp = tmp->next;
+				}
+				ft_printf("\n");
+				ft_printf("MAPS\n");
+				tmp = game->room[i].ways;
+				while (tmp)
+				{
+					ft_printf("%s ", game->room[tmp->num].name);
 					tmp = tmp->next;
 				}
 				ft_printf("\n");
@@ -119,10 +128,8 @@ int			main(void)
 			i++;
 		}
 		ft_printf("start = %i end = %i\n", game->start, game->end);
-	*/
+	
 	//перед запуском а алоритма необходимо проверить есть ли линки в старте и на энде. если линков нет, нет смысла запускать алгоритм
-	if (!lem_in(game))
-		ft_printf("ERROR\n");
 	clean_game(game);
 	while (1);
 }

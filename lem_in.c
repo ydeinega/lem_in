@@ -19,20 +19,36 @@ t_lst	*queue_elem(int num)
 	elem = (t_lst *)malloc(sizeof(t_lst));
 	if (!elem)
 		return (0);
-	elem.num = num;
-	elem.next = NULL;
+	elem->num = num;
+	elem->next = NULL;
 	return (elem);
 }
 
-void	add_to_queue(t_lst *elem)
+void	add_to_queue(t_lst *elem, int end)
 {
 	static t_lst	*last = NULL;
+	static t_lst	*previous = NULL;
 
 	if (elem)
 	{
 		if (last)
-			last->next = elem;
-		last = elem;
+		{
+			if (last->num != end)
+			{
+				last->next = elem;
+				if (elem->num == end)
+					previous = last;
+				last = elem;
+			}
+			else
+			{
+				previous->next = elem;
+				elem->next = last;
+				previous = elem;
+			}
+		}
+		else
+			last = elem;
 	}
 }
 
@@ -62,7 +78,7 @@ int		lem_in(t_lem_in *game)
 	visit = ft_strnew(game->room_num);
 	visit = ft_memset(visit, NOT_VISITED, game->room_num);
 	queue = queue_elem(game->start);
-	add_to_queue(queue);
+	add_to_queue(queue, game->end);
 	tmp = NULL;
 	while (queue)
 	{
@@ -74,7 +90,7 @@ int		lem_in(t_lem_in *game)
 			if (visit[links->num] == NOT_VISITED)
 			{
 				visit[links->num] = IN_QUEUE;
-				add_to_queue(queue_elem(links->num));
+				add_to_queue(queue_elem(links->num), game->end);
 				add_to_ways(&(game->room[links->num]), queue->num);
 				//мы записываем его в очередь и записываем в вэйс, откуда мы пришли
 				//при этом мы меняем состояние на В_ОЧЕРЕДИ
@@ -89,5 +105,6 @@ int		lem_in(t_lem_in *game)
 		free (tmp);
 	}
 	ft_strdel(&visit);
+	return (1);
 	//clean_queue(queue);
 }

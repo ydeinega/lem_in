@@ -58,6 +58,12 @@ void	clean_room(t_room_ar *room, int room_num)
 				room[i].links = room[i].links->next;
 				free(ptr);
 			}
+			while (room[i].ways)
+			{
+				ptr = room[i].ways;
+				room[i].ways = room[i].ways->next;
+				free(ptr);
+			}
 		}
 		free(room);
 	}

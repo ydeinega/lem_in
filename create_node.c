@@ -72,6 +72,7 @@ void		create_room_array(t_lem_in *game)
 		game->room[i].name = head->name;
 		game->room[i].pt = head->pt;
 		game->room[i].links = NULL;
+		game->room[i].ways = NULL;
 		if (head->type == START)
 			game->start = i;
 		if (head->type == END)
