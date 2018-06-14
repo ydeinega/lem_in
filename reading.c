@@ -120,7 +120,9 @@ int			main(void)
 		}
 		ft_printf("start = %i end = %i\n", game->start, game->end);
 	*/
-	//lem_in(game);
+	//перед запуском а алоритма необходимо проверить есть ли линки в старте и на энде. если линков нет, нет смысла запускать алгоритм
+	if (!lem_in(game))
+		ft_printf("ERROR\n");
 	clean_game(game);
 	while (1);
 }

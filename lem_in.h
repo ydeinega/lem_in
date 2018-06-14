@@ -18,6 +18,9 @@
 # define ANTS 0
 # define ROOM 3
 # define LINK 4
+# define VISITED 5
+# define NOT_VISITED 6
+# define IN_QUEUE 7
 
 typedef struct			s_coord
 {
@@ -44,6 +47,7 @@ typedef struct			s_room_ar
 	char				*name;
 	t_coord				pt;
 	t_lst				*links;
+	t_lst				*ways;//free ways and in the beginning set them to NULL
 }						t_room_ar;
 
 typedef struct			s_lem_in
@@ -52,9 +56,11 @@ typedef struct			s_lem_in
 	int					room_num;
 	int					start;
 	int					end;
+	//char				*visit;//set to NULL
 	t_room_lst			*node;
 	t_room_ar			*room;
 	t_list				*info;
+	//t_lst				*queue;//set to NULL
 }						t_lem_in;
 
 int						reading_lem_in(char *line, t_lem_in *game, int *type);
