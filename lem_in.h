@@ -81,6 +81,6 @@ int						add_link(t_room_ar *room, int n1, int n2);
 int						check_doubles(t_lem_in *game, int n1, int n2);
 void					clean_game(t_lem_in *game);
 void					clean_node(t_room_lst *node);
-void					clean_room(t_room_ar *room, int room_num);
+void					clean_room(t_room_ar *room, int room_num);//clean ways
 void					clean_info(t_list *info);
 #endif
