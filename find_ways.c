@@ -28,37 +28,46 @@ t_way	*create_room(t_lem_in *game, int num, char *visit)
 	return (room);
 }
 
-void	add_to_room(t_way *room)
+void	clean_room_inway(t_way *head)
 {
-	static t_way	*head = NULL;
+	t_way	*tmp;
 
-	if (room)
+	tmp = NULL;
+	while (head)
 	{
-		room->next = head;
-		head = room;
+		tmp = head;
+		head = head->next;
+		free (tmp);
 	}
 }
 
 t_way	*extract_way(t_lem_in *game, int num, char *visit, int *steps)
 {
+	t_way	*head;
 	t_way	*room;
 	t_lst	*tmp;
 
 	tmp = NULL;
-	room = create_room(game, game->end, visit);
-	add_to_room(room);
+	room = NULL;
+	head = create_room(game, game->end, visit);
 	while (num >= 0)
 	{
 		room = create_room(game, num, visit);
 		if (room)
 		{
-			add_to_room(room);
+			room->next = head;
+			head = room;
 			*steps = *steps + 1;
-		}	
+		}
+		else
+		{
+			clean_room_inway(head);
+			return (NULL);
+		}
 		tmp = game->room[num].ways;
 		num = tmp ? tmp->num : -1;
 	}
-	return (room);
+	return (head);
 }
 
 void	add_to_way(t_route **way, t_way *room, int steps)
@@ -109,10 +118,10 @@ int		find_ways(t_lem_in *game, char *visit)
 	{
 		ft_printf("\nsteps = %i\n", t->steps);
 		head = t->room;
+		ft_printf("ROOMS\n");
 		while (head)
 		{
-			ft_printf("ROOMS\n");
-			ft_printf("room = %i, ant = %i ", head->num, head->ant);
+			ft_printf("room = %s ", game->room[head->num].name);
 			head = head->next;
 		}
 		ft_printf("\n");

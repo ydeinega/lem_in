@@ -104,5 +104,6 @@ int						find_ways(t_lem_in *game, char *visit);
 void					add_to_way(t_route **way, t_way *room, int steps);
 t_way					*extract_way(t_lem_in *game, int num, char *visit, int *steps);
 t_way					*create_room(t_lem_in *game, int num, char *visit);
-void					add_to_room(t_way *room);
+void					add_to_room(t_lem_in *game, t_way *room);
+void					clean_room_inway(t_way *head);
 #endif
