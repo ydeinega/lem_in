@@ -101,6 +101,7 @@ int			main(void)
 	ft_lstprint(&(game->info));//check the func if it checks null as argument
 	if (!lem_in(game))
 		ft_printf("ERROR\n");
+	/*
 	int i = 0;
 	t_lst *tmp;
 		while (i < game->room_num)
@@ -128,7 +129,7 @@ int			main(void)
 			i++;
 		}
 		ft_printf("start = %i end = %i\n", game->start, game->end);
-	
+	*/
 	//перед запуском а алоритма необходимо проверить есть ли линки в старте и на энде. если линков нет, нет смысла запускать алгоритм
 	clean_game(game);
 	while (1);

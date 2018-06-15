@@ -68,13 +68,33 @@ void	add_to_ways(t_room_ar *room, int num)
 		room->ways = queue_elem(num);
 }
 
+void	visit_room(t_lem_in *game, t_lst *queue, char *visit)
+{
+	t_lst	*links;
+
+	links = game->room[queue->num].links;
+	while (links)
+	{
+		if (visit[links->num] == NOT_VISITED)
+		{
+			visit[links->num] = IN_QUEUE;
+			add_to_queue(queue_elem(links->num), game->end);
+			add_to_ways(&(game->room[links->num]), queue->num);
+		}		
+		else if (visit[links->num] == IN_QUEUE)
+			add_to_ways(&(game->room[links->num]), queue->num);
+		links = links->next;
+	}
+}
+
 int		lem_in(t_lem_in *game)
 {
 	char	*visit;
 	t_lst	*queue;
 	t_lst	*tmp;
-	t_lst	*links;
+	int		ret;
 
+	ret = 1;
 	visit = ft_strnew(game->room_num);
 	visit = ft_memset(visit, NOT_VISITED, game->room_num);
 	queue = queue_elem(game->start);
@@ -83,28 +103,15 @@ int		lem_in(t_lem_in *game)
 	while (queue)
 	{
 		visit[queue->num] = VISITED;
-		//здесь в самом начале нужно поменять статус на ВИЗИТЕД
-		links = game->room[queue->num].links;
-		while (links)
-		{
-			if (visit[links->num] == NOT_VISITED)
-			{
-				visit[links->num] = IN_QUEUE;
-				add_to_queue(queue_elem(links->num), game->end);
-				add_to_ways(&(game->room[links->num]), queue->num);
-				//мы записываем его в очередь и записываем в вэйс, откуда мы пришли
-				//при этом мы меняем состояние на В_ОЧЕРЕДИ
-			}		
-			else if (visit[links->num] == IN_QUEUE)
-				add_to_ways(&(game->room[links->num]), queue->num);
-				//мы записываем в вэйс откуда мы пришли
-			links = links->next;
-		}
+		visit_room(game, queue, visit);
 		tmp = queue;
 		queue = queue->next;
 		free (tmp);
 	}
+	visit = ft_memset(visit, NOT_VISITED, game->room_num);
+	if (!find_ways(game, visit))
+		ret = 0;
 	ft_strdel(&visit);
-	return (1);
 	//clean_queue(queue);
+	return (ret);
 }

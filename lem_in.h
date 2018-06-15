@@ -50,6 +50,20 @@ typedef struct			s_room_ar
 	t_lst				*ways;
 }						t_room_ar;
 
+typedef struct			s_way
+{
+	int					num;
+	int					ant;
+	struct s_way		*next;
+}						t_way;
+
+typedef struct			s_route
+{
+	int					steps;
+	t_way				*room;
+	struct s_route		*next;
+}						t_route;
+
 typedef struct			s_lem_in
 {
 	int					ants;
@@ -60,20 +74,6 @@ typedef struct			s_lem_in
 	t_room_ar			*room;
 	t_list				*info;
 }						t_lem_in;
-
-typedef struct			s_way
-{
-	int					room;
-	int					ant;
-	s_way				*next;
-}						t_way;
-
-typedef struct			s_bug
-{
-	int					ant;
-	int					room;
-	t_way				*turn;
-}						t_bug;
 
 int						reading_lem_in(char *line, t_lem_in *game, int *type);
 t_lem_in				*create_game(void);
@@ -99,4 +99,10 @@ t_lst					*queue_elem(int num);
 void					add_to_queue(t_lst *elem, int end);
 void					add_to_ways(t_room_ar *room, int num);
 int						lem_in(t_lem_in *game);
+void					visit_room(t_lem_in *game, t_lst *queue, char *visit);
+int						find_ways(t_lem_in *game, char *visit);
+void					add_to_way(t_route **way, t_way *room, int steps);
+t_way					*extract_way(t_lem_in *game, int num, char *visit, int *steps);
+t_way					*create_room(t_lem_in *game, int num, char *visit);
+void					add_to_room(t_way *room);
 #endif
