@@ -21,6 +21,8 @@
 # define VISITED 5
 # define NOT_VISITED 6
 # define IN_QUEUE 7
+# define NOT_FINISHED 8
+# define FINISHED 9
 
 typedef struct			s_coord
 {
@@ -52,7 +54,7 @@ typedef struct			s_room_ar
 
 typedef struct			s_way
 {
-	int					num;
+	int					num;//room number
 	int					ant;
 	struct s_way		*next;
 }						t_way;
@@ -63,6 +65,14 @@ typedef struct			s_route
 	t_way				*room;
 	struct s_route		*next;
 }						t_route;
+
+typedef struct			s_bug
+{
+	int					room;
+	int					num;//ants number
+	int					way;
+	t_way				*turn;
+}						t_bug;
 
 typedef struct			s_lem_in
 {
@@ -104,6 +114,5 @@ int						find_ways(t_lem_in *game, char *visit);
 void					add_to_way(t_route **way, t_way *room, int steps);
 t_way					*extract_way(t_lem_in *game, int num, char *visit, int *steps);
 t_way					*create_room(t_lem_in *game, int num, char *visit);
-void					add_to_room(t_lem_in *game, t_way *room);
 void					clean_room_inway(t_way *head);
 #endif

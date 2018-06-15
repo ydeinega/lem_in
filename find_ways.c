@@ -111,6 +111,7 @@ int		find_ways(t_lem_in *game, char *visit)
 		tmp = tmp->next;
 		steps = 0;
 	}
+	/*
 	t_route *t;
 	t_way *head;
 	t = way;
@@ -127,6 +128,7 @@ int		find_ways(t_lem_in *game, char *visit)
 		ft_printf("\n");
 		t = t->next;
 	}
-	//move_ants(game, way);
+	*/
+	way ? move_ants(game, way, nways) : 0;
 	return (nways);
 }
