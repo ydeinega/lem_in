@@ -129,8 +129,10 @@ void	move_ants(t_lem_in *game, t_route *way)
 	int		n_ants;
 	t_bug	*ant;
 	char	*finish;
+	int		first;
 
 	i = -1;
+	first = 0;
 	n_ants = game->ants;
 	//way = make_way_array(way, nways);
 	ant = create_ants(game);
@@ -161,6 +163,8 @@ void	move_ants(t_lem_in *game, t_route *way)
 				// 	ft_printf("\n");
 			}
 		}
+		!first ? ft_printf("\n") : 0;
+		first++;
 		print_moves(game, ant, game->ants, finish);
 		i = -1;
 	}
