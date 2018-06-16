@@ -50,16 +50,19 @@ void	choose_way(t_route *way, t_bug *ant, int *ants)// ok
 	t_route	*head;
 	t_way	*tmp;
 	int		div;
+	int		mod;
 
 	head = way;
 	tmp = NULL;
 	div = 0;
+	mod = 0;
 	//ft_printf("I'm here\n");
 	while (head)
 	{
 		tmp = head->room->next;
 		div = head->steps / way->steps;
-		if (tmp->ant == 0 && (div == 1 || *ants > div))
+		mod = head->steps % way->steps;
+		if (tmp->ant == 0 && ((div == 1 && mod == 0) || *ants > div))
 		{
 			//ft_printf("I'm also here\n");
 			ant->room = tmp->num;
