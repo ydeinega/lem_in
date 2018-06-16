@@ -45,35 +45,43 @@ int		check_rooms(t_bug *ant, int n, int end)//ok
 	return (1);
 }
 
-void	choose_way(t_route *way, t_bug *ant, int *ants, int nways)// NEOK - perepisat'
+void	choose_way(t_route *way, t_bug *ant, int *ants)// ok
 {
-	int i;
+	t_route	*head;
+	t_way	*tmp;
+	int		div;
 
-	i = -1;
-	while (++i < nways)
+	head = way;
+	tmp = NULL;
+	div = 0;
+	//ft_printf("I'm here\n");
+	while (head)
 	{
-		if (way[i].room->ant == 0 &&
-			(i == 0 || *ants > (way[i].steps / way[0].steps)))
+		tmp = head->room->next;
+		div = head->steps / way->steps;
+		if (tmp->ant == 0 && (head == way || *ants > div))
 		{
-			ant->room = way[i].room->num;
-			//ant->way = i;
-			ant->turn = way[i].room;
-			way[i].room->ant = ant->num;
+			//ft_printf("I'm also here\n");
+			ant->room = tmp->num;
+			ant->turn = tmp;
+			tmp->ant = ant->num;
 			*ants = *ants - 1;
+			break ;
 		}
+		head = head->next;
 	}
+	//ft_printf("Good bye\n");
 }
 
 void	move_futher(t_bug *ant)
 {
-	t_way	*turn;
-
-	turn = ant->turn;
-	turn->ant = 0;
-	turn = turn->next;
-	ant->room = turn->num;
-	turn->ant = ant->num;
-	ant->turn = turn;
+	if (ant->turn)
+	{
+		ant->turn->ant = 0;
+		ant->turn = ant->turn->next;
+		ant->room = ant->turn->num;
+		ant->turn->ant = ant->num;
+	}
 }
 
 void	print_moves(t_lem_in *game, t_bug *ant, int ants, char *finish)
@@ -89,7 +97,7 @@ void	print_moves(t_lem_in *game, t_bug *ant, int ants, char *finish)
 		{
 			if (first)
 				ft_printf(" ");
-			ft_printf("L%i-%s", ant->num, game->room[ant->room].name);
+			ft_printf("L%i-%s", ant[i].num, game->room[ant[i].room].name);
 			first++;
 			if (ant[i].room == game->end)
 				finish[i] = FINISHED;
@@ -115,7 +123,7 @@ t_bug	*create_ants(t_lem_in *game)//ok
 	return (ant);
 }
 
-void	move_ants(t_lem_in *game, t_route *way, int nways)
+void	move_ants(t_lem_in *game, t_route *way)
 {
 	int		i;
 	int		n_ants;
@@ -128,14 +136,30 @@ void	move_ants(t_lem_in *game, t_route *way, int nways)
 	ant = create_ants(game);
 	finish = ft_strnew(game->ants);
 	finish = ft_memset(finish, NOT_FINISHED, game->ants);
-	while (check_rooms(ant, game->ants, game->end) == 0)//ft_strchr(finish, NOT_FINISHED)
+	while (ft_strchr(finish, NOT_FINISHED))//check_rooms(ant, game->ants, game->end) == 0)//
 	{
 		while (++i < game->ants)
 		{
 			if (ant[i].room == game->start)
-				choose_way(way, &ant[i], &n_ants, nways);
+			{
+				choose_way(way, &ant[i], &n_ants);
+				// ft_printf("\nCHOOSE ROOM\n");
+				// ft_printf("ant = %i room = %s ", ant[i].num, game->room[ant[i].room].name);
+				// if (ant[i].turn)
+				// 	ft_printf("ant_in_room = %i\n", ant[i].turn->ant);
+				// else
+				// 	ft_printf("\n");
+			}
 			else if (ant[i].room != game->end)
+			{
 				move_futher(&ant[i]);
+				// ft_printf("\nMOVE FURTHER\n");
+				// ft_printf("ant = %i room = %s ", ant[i].num, game->room[ant[i].room].name);
+				// if (ant[i].turn)
+				// 	ft_printf("ant_in_room = %i\n", ant[i].turn->ant);
+				// else
+				// 	ft_printf("\n");
+			}
 		}
 		print_moves(game, ant, game->ants, finish);
 		i = -1;

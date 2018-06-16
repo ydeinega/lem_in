@@ -129,6 +129,6 @@ int		find_ways(t_lem_in *game, char *visit)
 		t = t->next;
 	}
 	*/
-	way ? move_ants(game, way, nways) : 0;
+	way ? move_ants(game, way) : 0;
 	return (nways);
 }

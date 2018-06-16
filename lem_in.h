@@ -116,9 +116,9 @@ t_way					*extract_way(t_lem_in *game, int num, char *visit, int *steps);
 t_way					*create_room(t_lem_in *game, int num, char *visit);
 void					clean_room_inway(t_way *head);
 int						check_rooms(t_bug *ant, int n, int end);
-void					choose_way(t_route *way, t_bug *ant, int *ants, int nways);
+void					choose_way(t_route *way, t_bug *ant, int *ants);
 void					move_futher(t_bug *ant);
 void					print_moves(t_lem_in *game, t_bug *ant, int ants, char *finish);
 t_bug					*create_ants(t_lem_in *game);
-void					move_ants(t_lem_in *game, t_route *way, int nways);
+void					move_ants(t_lem_in *game, t_route *way);
 #endif
