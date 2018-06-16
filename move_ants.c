@@ -59,7 +59,7 @@ void	choose_way(t_route *way, t_bug *ant, int *ants)// ok
 	{
 		tmp = head->room->next;
 		div = head->steps / way->steps;
-		if (tmp->ant == 0 && (head == way || *ants > div))
+		if (tmp->ant == 0 && (div == 1 || *ants > div))
 		{
 			//ft_printf("I'm also here\n");
 			ant->room = tmp->num;
@@ -138,6 +138,7 @@ void	move_ants(t_lem_in *game, t_route *way)
 	ant = create_ants(game);
 	finish = ft_strnew(game->ants);
 	finish = ft_memset(finish, NOT_FINISHED, game->ants);
+	ft_lstprint(&(game->info));
 	while (ft_strchr(finish, NOT_FINISHED))//check_rooms(ant, game->ants, game->end) == 0)//
 	{
 		while (++i < game->ants)

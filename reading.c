@@ -92,13 +92,13 @@ int			main(void)
 		}
 		ft_strdel(&line);
 	}
-	if (ret < 0)
+	if (ret < 0 || type != LINK)
 	{
 		ft_printf("ERROR\n");
 		clean_game(game);
 		return (0);
 	}
-	ft_lstprint(&(game->info));//check the func if it checks null as argument
+	//ft_lstprint(&(game->info));//check the func if it checks null as argument moved it to the function move ants
 	if (!lem_in(game))
 		ft_printf("ERROR\n");
 	/*

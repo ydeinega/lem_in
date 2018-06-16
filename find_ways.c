@@ -130,5 +130,25 @@ int		find_ways(t_lem_in *game, char *visit)
 	}
 	*/
 	way ? move_ants(game, way) : 0;
+	/*
+	ft_printf("\nnways = %i\n", nways);
+	
+	t_route *t;
+	t_way *head;
+	t = way;
+	while (t)
+	{
+		ft_printf("\nsteps = %i\n", t->steps);
+		head = t->room;
+		ft_printf("ROOMS\n");
+		while (head)
+		{
+			ft_printf("room = %s ", game->room[head->num].name);
+			head = head->next;
+		}
+		ft_printf("\n");
+		t = t->next;
+	}
+	*/
 	return (nways);
 }
