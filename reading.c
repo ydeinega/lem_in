@@ -52,6 +52,29 @@ int			reading_lem_in(char *line, t_lem_in *game, int *type)
 	return (1);
 }
 
+// int			reading_lem_in(char *line, t_lem_in *game, int *type)
+// {
+// 	if (line[0] != '#')
+// 	{
+// 		if (ft_strchr(line, ' '))
+// 		{
+// 			if (!room_valid(line, game, type))
+// 				return (0);
+// 		}
+// 		else if (ft_strchr(line, '-'))
+// 		{
+// 			if (!link_valid(line, game, type))
+// 				return (0);
+// 		}
+// 		else if (!ants_valid(line, game, type))
+// 			return (0);
+// 	}
+// 	else if (!command_valid(line, game, type))
+// 		return (0);
+// 	add_info(game, line);
+// 	return (1);
+// }
+
 void		add_info(t_lem_in *game, char *ptr)
 {
 	t_list	*tmp;
@@ -90,7 +113,7 @@ int			main(void)
 	if (!(game = create_game()))
 	{
 		ft_printf("ERROR\n");
-		system("leaks a.out");//
+		system("leaks sudo");//
 		return (0);
 	}
 	type = ANTS;
@@ -101,7 +124,7 @@ int			main(void)
 			ft_printf("ERROR\n");
 			clean_game(game);
 			ft_strdel(&line);
-			system("leaks a.out");//
+			system("leaks sudo");//
 			return (0);
 		}
 		ft_strdel(&line);
@@ -110,7 +133,7 @@ int			main(void)
 	{
 		ft_printf("ERROR\n");
 		clean_game(game);
-		system("leaks a.out");//
+		system("leaks sudo");//
 		return (0);
 	}
 	//ft_lstprint(&(game->info));//check the func if it checks null as argument moved it to the function move ants
@@ -147,5 +170,5 @@ int			main(void)
 	*/
 	//перед запуском а алоритма необходимо проверить есть ли линки в старте и на энде. если линков нет, нет смысла запускать алгоритм
 	clean_game(game);
-	system("leaks a.out");//
+	system("leaks sudo");//
 }

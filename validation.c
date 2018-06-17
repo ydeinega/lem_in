@@ -12,33 +12,61 @@
 
 #include "lem_in.h"
 
+int		check_if_int(char *str)
+{
+	char	*s;
+	int		len;
+	int		i;
+
+	i = -1;
+	s = "2147483647";
+	len = ft_strlen(str);
+	if (len < 10 || len > 10)
+	{
+		ft_strdel(&str);
+		return (len < 10 ? 1 : 0);
+	}
+	else if (len == 10)
+	{
+		while (str[++i])
+		{
+			if (str[i] < s[i])
+				return (1);
+			if (str[i] > s[i])
+				return (0);
+		}
+	}
+	ft_strdel(&str);
+	return (1);
+}
+
 int		check_room_str(char *line)
 {
 	int i;
 	int num;
-	int name;
+	int start;
 
 	i = -1;
 	num = 0;
-	name = 0;
 	while (line[++i])
 	{
-		if (i == 0 && line[i] != '#' && line[i] != 'L')
-			name++;
-		if (line[i] == ' ' && !ft_isdigit(line[i + 1]))
+		if (i == 0 && (line[i] == '#' || line[i] == 'L'))
+			return (0);
+		else if (line[i] == ' ' && !ft_isdigit(line[i + 1]))
 			return (0);
 		if (ft_isdigit(line[i]) && i > 0 && line[i - 1] == ' ')
 		{
 			num++;
+			start = i;
 			while (line[++i] && line[i] != ' ')
-			{
 				if (!ft_isdigit(line[i]))
 					return (0);
-			}
+			if (!check_if_int(ft_strsub(line, start, i - start)))
+				return (0);
 			i--;
 		}
 	}
-	return (num == 2 && name == 1 ? 1 : 0);
+	return (num == 2 ? 1 : 0);
 }
 
 int		check_link_str(char *line)
@@ -112,6 +140,8 @@ int		ants_valid(char *line, t_lem_in *game, int *type)
 		if (!ft_isdigit(line[i]))
 			return (0);
 	}
+	if (!check_if_int(ft_strdup(line)))
+		return (0);
 	game->ants = ft_atoi(line);
 	return (game->ants > 0 ? 1 : 0);
 }

@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-void	choose_way(t_route *way, t_bug *ant, int *ants)
+void	choose_way(t_route *way, t_bug *ant, int *ants, int end)
 {
 	t_route	*head;
 	t_way	*tmp;
@@ -32,7 +32,8 @@ void	choose_way(t_route *way, t_bug *ant, int *ants)
 		{
 			ant->room = tmp->num;
 			ant->turn = tmp;
-			tmp->ant = ant->num;
+			if (tmp->num != end)
+				tmp->ant = ant->num;
 			*ants = *ants - 1;
 			break ;
 		}
@@ -126,7 +127,7 @@ void	move_ants(t_lem_in *game, t_route *way)
 		while (++i < game->ants)
 		{
 			if (ant[i].room == game->start)
-				choose_way(way, &ant[i], &n_ants);
+				choose_way(way, &ant[i], &n_ants, game->end);
 			else if (ant[i].room != game->end)
 				move_futher(&ant[i]);
 		}
