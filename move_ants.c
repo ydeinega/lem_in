@@ -12,40 +12,7 @@
 
 #include "lem_in.h"
 
-// t_route	*make_way_array(t_route *way, int nways)
-// {
-// 	t_route	*array;
-// 	t_route	*tmp;
-// 	int		i;
-
-// 	i = -1;
-// 	tmp = NULL;
-// 	array = (t_route *)malloc(sizeof(t_route) * nways);
-// 	while (++i < nways)
-// 	{
-// 		array[i].steps = way->steps;
-// 		array[i].room = way->room;
-// 		array[i].next = NULL;
-// 		tmp = way;
-// 		way = way->next;
-// 		free(tmp);
-// 	}
-// }
-
-int		check_rooms(t_bug *ant, int n, int end)//ok
-{
-	int i;
-
-	i = -1;
-	while (++i < n)
-	{
-		if (ant[i].room != end)
-			return (0);
-	}
-	return (1);
-}
-
-void	choose_way(t_route *way, t_bug *ant, int *ants)// ok
+void	choose_way(t_route *way, t_bug *ant, int *ants)
 {
 	t_route	*head;
 	t_way	*tmp;
@@ -56,7 +23,6 @@ void	choose_way(t_route *way, t_bug *ant, int *ants)// ok
 	tmp = NULL;
 	div = 0;
 	mod = 0;
-	//ft_printf("I'm here\n");
 	while (head)
 	{
 		tmp = head->room->next;
@@ -64,7 +30,6 @@ void	choose_way(t_route *way, t_bug *ant, int *ants)// ok
 		mod = head->steps % way->steps;
 		if (tmp->ant == 0 && ((div == 1 && mod == 0) || *ants > div))
 		{
-			//ft_printf("I'm also here\n");
 			ant->room = tmp->num;
 			ant->turn = tmp;
 			tmp->ant = ant->num;
@@ -73,7 +38,6 @@ void	choose_way(t_route *way, t_bug *ant, int *ants)// ok
 		}
 		head = head->next;
 	}
-	//ft_printf("Good bye\n");
 }
 
 void	move_futher(t_bug *ant)
@@ -109,7 +73,7 @@ void	print_moves(t_lem_in *game, t_bug *ant, int ants, char *finish)
 	ft_printf("\n");
 }
 
-t_bug	*create_ants(t_lem_in *game)//ok
+t_bug	*create_ants(t_lem_in *game)
 {
 	t_bug	*ant;
 	int		i;
@@ -126,6 +90,21 @@ t_bug	*create_ants(t_lem_in *game)//ok
 	return (ant);
 }
 
+void	clean_way(t_route *way)
+{
+	t_route	*tmp;
+
+	
+	tmp = NULL;
+	while (way)
+	{
+		tmp = way;
+		clean_room_inway(way->room);
+		way = way->next;
+		free(tmp);
+	}
+}
+
 void	move_ants(t_lem_in *game, t_route *way)
 {
 	int		i;
@@ -137,40 +116,26 @@ void	move_ants(t_lem_in *game, t_route *way)
 	i = -1;
 	first = 0;
 	n_ants = game->ants;
-	//way = make_way_array(way, nways);
 	ant = create_ants(game);
 	finish = ft_strnew(game->ants);
 	finish = ft_memset(finish, NOT_FINISHED, game->ants);
 	ft_lstprint(&(game->info));
-	while (ft_strchr(finish, NOT_FINISHED))//check_rooms(ant, game->ants, game->end) == 0)//
+	//Print ways and number of ants on each way
+	while (ft_strchr(finish, NOT_FINISHED))
 	{
 		while (++i < game->ants)
 		{
 			if (ant[i].room == game->start)
-			{
 				choose_way(way, &ant[i], &n_ants);
-				// ft_printf("\nCHOOSE ROOM\n");
-				// ft_printf("ant = %i room = %s ", ant[i].num, game->room[ant[i].room].name);
-				// if (ant[i].turn)
-				// 	ft_printf("ant_in_room = %i\n", ant[i].turn->ant);
-				// else
-				// 	ft_printf("\n");
-			}
 			else if (ant[i].room != game->end)
-			{
 				move_futher(&ant[i]);
-				// ft_printf("\nMOVE FURTHER\n");
-				// ft_printf("ant = %i room = %s ", ant[i].num, game->room[ant[i].room].name);
-				// if (ant[i].turn)
-				// 	ft_printf("ant_in_room = %i\n", ant[i].turn->ant);
-				// else
-				// 	ft_printf("\n");
-			}
 		}
 		!first ? ft_printf("\n") : 0;
 		first++;
 		print_moves(game, ant, game->ants, finish);
 		i = -1;
 	}
-	//free(ant);
+	free(ant);
+	clean_way(way);
+	ft_strdel(&finish);
 }

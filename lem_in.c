@@ -112,6 +112,6 @@ int		lem_in(t_lem_in *game)
 	if (!find_ways(game, visit))
 		ret = 0;
 	ft_strdel(&visit);
-	//clean_queue(queue);
+	clean_lst(&queue);
 	return (ret);
 }

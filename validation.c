@@ -74,17 +74,13 @@ int		room_valid(char *line, t_lem_in *game, int *type)
 	{
 		node = create_node(line, type);
 		if (!add_node_lst(&(game->node), node))
+		{
+			ft_strdel(&(node->name));
+			free(node);
 			return (0);
+		}
 	}
 	game->room_num++;
-	// node = game->node;
-	// while (node)
-	// {
-	// 	ft_printf("name = |%s| ", node->name);
-	// 	ft_printf("point = (%i,%i) ", node->pt.i, node->pt.j);
-	// 	ft_printf("type = %i\n", node->type);
-	// 	node = node->next;
-	// }
 	return (1);
 }
 

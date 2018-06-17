@@ -54,7 +54,7 @@ typedef struct			s_room_ar
 
 typedef struct			s_way
 {
-	int					num;//room number
+	int					num;
 	int					ant;
 	struct s_way		*next;
 }						t_way;
@@ -69,8 +69,7 @@ typedef struct			s_route
 typedef struct			s_bug
 {
 	int					room;
-	int					num;//ants number
-	//int					way;
+	int					num;
 	t_way				*turn;
 }						t_bug;
 
@@ -105,6 +104,7 @@ void					clean_game(t_lem_in *game);
 void					clean_node(t_room_lst *node);
 void					clean_room(t_room_ar *room, int room_num);
 void					clean_info(t_list *info);
+void					clean_lst(t_lst **list);
 t_lst					*queue_elem(int num);
 void					add_to_queue(t_lst *elem, int end);
 void					add_to_ways(t_room_ar *room, int num);
@@ -121,4 +121,5 @@ void					move_futher(t_bug *ant);
 void					print_moves(t_lem_in *game, t_bug *ant, int ants, char *finish);
 t_bug					*create_ants(t_lem_in *game);
 void					move_ants(t_lem_in *game, t_route *way);
+void					clean_way(t_route *way);
 #endif

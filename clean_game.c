@@ -43,6 +43,61 @@ void	clean_node(t_room_lst *node)
 void	clean_room(t_room_ar *room, int room_num)
 {
 	int			i;
+
+	i = -1;
+	if (room)
+	{
+		while (++i < room_num)
+		{
+			ft_strdel(&(room[i].name));
+			clean_lst(&(room[i].links));
+			clean_lst(&(room[i].ways));
+		}
+		free(room);
+	}
+}
+
+void	clean_info(t_list *info)
+{
+	t_list		*tmp;
+
+	tmp = NULL;
+	if (info)
+	{
+		while (info)
+		{
+			tmp = info;
+			ft_strdel((char **)(&(info->content)));
+			info = info->next;
+			free(tmp);
+		}
+	}
+}
+
+void	clean_lst(t_lst **list)
+{
+	t_lst	*head;
+	t_lst	*tmp;
+
+	head = NULL;
+	tmp = NULL;
+	if (list)
+	{
+		head = *list;
+		while (head)
+		{
+			tmp = head;
+			head = head->next;
+			free(tmp);
+		}
+		*list = NULL;
+	}
+}
+
+/*
+void	clean_room(t_room_ar *room, int room_num)
+{
+	int			i;
 	t_lst		*ptr;
 
 	i = -1;
@@ -68,20 +123,4 @@ void	clean_room(t_room_ar *room, int room_num)
 		free(room);
 	}
 }
-
-void	clean_info(t_list *info)
-{
-	t_list		*tmp;
-
-	tmp = NULL;
-	if (info)
-	{
-		while (info)
-		{
-			tmp = info;
-			ft_strdel((char **)(&(info->content)));
-			info = info->next;
-			free(tmp);
-		}
-	}
-}
+*/

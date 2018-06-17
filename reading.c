@@ -22,21 +22,33 @@ int			reading_lem_in(char *line, t_lem_in *game, int *type)
 		if (ft_strchr(ptr, ' '))
 		{
 			if (!room_valid(ptr, game, type))
+			{
+				ft_strdel(&ptr);
 				return (0);
+			}
 		}
 		else if (ft_strchr(ptr, '-'))
 		{
 			if (!link_valid(ptr, game, type))
+			{
+				ft_strdel(&ptr);
 				return (0);
+			}
 		}
 		else if (!ants_valid(ptr, game, type))
+		{
+			ft_strdel(&ptr);
 			return (0);
+		}
 	}
 	else if (!command_valid(ptr, game, type))
+	{
+		ft_strdel(&ptr);
 		return (0);
+	}
 	add_info(game, ptr);
 	if (ptr)
-		ft_strdel (&ptr);
+		ft_strdel(&ptr);
 	return (1);
 }
 
@@ -78,6 +90,7 @@ int			main(void)
 	if (!(game = create_game()))
 	{
 		ft_printf("ERROR\n");
+		system("leaks a.out");//
 		return (0);
 	}
 	type = ANTS;
@@ -88,6 +101,7 @@ int			main(void)
 			ft_printf("ERROR\n");
 			clean_game(game);
 			ft_strdel(&line);
+			system("leaks a.out");//
 			return (0);
 		}
 		ft_strdel(&line);
@@ -96,6 +110,7 @@ int			main(void)
 	{
 		ft_printf("ERROR\n");
 		clean_game(game);
+		system("leaks a.out");//
 		return (0);
 	}
 	//ft_lstprint(&(game->info));//check the func if it checks null as argument moved it to the function move ants
@@ -132,5 +147,5 @@ int			main(void)
 	*/
 	//перед запуском а алоритма необходимо проверить есть ли линки в старте и на энде. если линков нет, нет смысла запускать алгоритм
 	clean_game(game);
-	//while (1);
+	system("leaks a.out");//
 }
