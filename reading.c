@@ -77,36 +77,38 @@ t_lem_in	*create_game(void)
 	game->start = 0;
 	game->end = 0;
 	game->error = -1;
+	game->empty = 0;
 	game->node = NULL;
 	game->room = NULL;
 	game->info = NULL;
+	game->line = NULL;
 	return (game);
 }
 
 int			main(void)
 {
-	char		*line;
 	t_lem_in	*game;
 	int			type;
 	int			ret;
 
-	line = NULL;
 	type = ANTS;
 	game = create_game();
-	while ((ret = get_next_line(0, &line)) > 0)
+	while ((ret = get_next_line(0, &(game->line))) > 0)
 	{
-		reading_lem_in(line, game, &type);
-		ft_strdel(&line);
+		game->empty++;
+		reading_lem_in(game->line, game, &type);
+		ft_strdel(&(game->line));
 	}
 	if (ret < 0 || type != LINK)
 	{
 		game->error = ret < 0 ? 8 : 7;
-		error(line, NULL, game);
+		game->error = !game->empty ? 9 : game->error;
+		error(game->line, NULL, game);
 	}
 	if (!lem_in(game))
 	{
 		game->error = 10;
-		error(line, NULL, game);
+		error(game->line, NULL, game);
 	}
 	clean_game(game);
 }

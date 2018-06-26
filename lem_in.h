@@ -98,9 +98,11 @@ typedef struct			s_lem_in
 	int					start;
 	int					end;
 	int					error;
+	int					empty;
 	t_room_lst			*node;
 	t_room_ar			*room;
 	t_list				*info;
+	char				*line;
 }						t_lem_in;
 
 void					reading_lem_in(char *line, t_lem_in *game, int *type);
@@ -115,7 +117,7 @@ int						check_link_str(char *line);
 int						ants_valid(char *line, t_lem_in *game, int *type);
 int						command_valid(char *line, t_lem_in *game, int *type);
 t_room_lst				*create_node(char *line, int *type);
-int						add_node_lst(t_room_lst **head, t_room_lst *node);
+int						add_node_lst(t_room_lst **head, t_room_lst *node, t_lem_in *game);
 void					create_room_array(t_lem_in *game);
 int						manage_links(t_lem_in *game, char *line);
 int						check_links(t_lem_in *game, char *name1, char *name2);
@@ -146,6 +148,7 @@ void					print_moves(t_lem_in *game, t_bug *ant, int ants,
 t_bug					*create_ants(t_lem_in *game);
 void					move_ants(t_lem_in *game, t_route *way);
 void					clean_way(t_route *way);
+int						coord_cmp(t_coord a, t_coord b);
 #endif
 
 /*

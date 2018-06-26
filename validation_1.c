@@ -75,7 +75,8 @@ int		room_valid(char *line, t_lem_in *game, int *type)
 	int			ret;
 
 	node = NULL;
-	if (*type == LINK || !(ret = check_room_str(line)) || !game->ants)
+	ret = check_room_str(line);
+	if (*type == LINK || !ret || !game->ants)
 	{
 		game->error = *type == LINK ? 12 : game->error;
 		game->error = !ret ? 0 : game->error;
