@@ -120,7 +120,7 @@ int			main(void)
 	if (ret < 0 || type != LINK)
 	{
 		game->error = ret < 0 ? 8 : 7;
-		game->error = !game->empty ? 9 : game->error;
+		game->error = !game->empty && !ret ? 9 : game->error;
 		error(game->line, NULL, game);
 	}
 	if (!lem_in(game))
