@@ -93,34 +93,3 @@ void	clean_lst(t_lst **list)
 		*list = NULL;
 	}
 }
-
-/*
-void	clean_room(t_room_ar *room, int room_num)
-{
-	int			i;
-	t_lst		*ptr;
-
-	i = -1;
-	ptr = NULL;
-	if (room)
-	{
-		while (++i < room_num)
-		{
-			ft_strdel(&(room[i].name));
-			while (room[i].links)
-			{
-				ptr = room[i].links;
-				room[i].links = room[i].links->next;
-				free(ptr);
-			}
-			while (room[i].ways)
-			{
-				ptr = room[i].ways;
-				room[i].ways = room[i].ways->next;
-				free(ptr);
-			}
-		}
-		free(room);
-	}
-}
-*/

@@ -52,28 +52,6 @@ void	move_futher(t_bug *ant)
 	}
 }
 
-void	print_moves(t_lem_in *game, t_bug *ant, int ants, char *finish)
-{
-	int first;
-	int i;
-
-	first = 0;
-	i = -1;
-	while (++i < ants)
-	{
-		if (ant[i].room != game->start && finish[i] != FINISHED)
-		{
-			if (first)
-				ft_printf(" ");
-			ft_printf("L%i-%s", ant[i].num, game->room[ant[i].room].name);
-			first++;
-			if (ant[i].room == game->end)
-				finish[i] = FINISHED;
-		}
-	}
-	ft_printf("\n");
-}
-
 t_bug	*create_ants(t_lem_in *game)
 {
 	t_bug	*ant;
@@ -85,7 +63,6 @@ t_bug	*create_ants(t_lem_in *game)
 	{
 		ant[i].room = game->start;
 		ant[i].num = i + 1;
-		//ant[i].way = -1;
 		ant[i].turn = NULL;
 	}
 	return (ant);
@@ -95,7 +72,6 @@ void	clean_way(t_route *way)
 {
 	t_route	*tmp;
 
-	
 	tmp = NULL;
 	while (way)
 	{
@@ -112,16 +88,12 @@ void	move_ants(t_lem_in *game, t_route *way)
 	int		n_ants;
 	t_bug	*ant;
 	char	*finish;
-	int		first;
 
 	i = -1;
-	first = 0;
 	n_ants = game->ants;
 	ant = create_ants(game);
 	finish = ft_strnew(game->ants);
 	finish = ft_memset(finish, NOT_FINISHED, game->ants);
-	ft_lstprint(&(game->info));
-	//Print ways and number of ants on each way
 	while (ft_strchr(finish, NOT_FINISHED))
 	{
 		while (++i < game->ants)
@@ -131,8 +103,6 @@ void	move_ants(t_lem_in *game, t_route *way)
 			else if (ant[i].room != game->end)
 				move_futher(&ant[i]);
 		}
-		!first ? ft_printf("\n") : 0;
-		first++;
 		print_moves(game, ant, game->ants, finish);
 		i = -1;
 	}

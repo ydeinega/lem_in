@@ -79,12 +79,14 @@ typedef struct			s_lem_in
 	int					room_num;
 	int					start;
 	int					end;
+	int					first;
 	t_room_lst			*node;
 	t_room_ar			*room;
 	t_list				*info;
 }						t_lem_in;
 
-int						reading_lem_in(char *line, t_lem_in *game, int *type);
+void					reading_lem_in(char *line, t_lem_in *game, int *type);
+void					error(char *line, char *ptr, t_lem_in *game);
 t_lem_in				*create_game(void);
 void					add_info(t_lem_in *game, char *ptr);
 int						room_valid(char *line, t_lem_in *game, int *type);
@@ -113,13 +115,16 @@ int						lem_in(t_lem_in *game);
 void					visit_room(t_lem_in *game, t_lst *queue, char *visit);
 int						find_ways(t_lem_in *game, char *visit);
 void					add_to_way(t_route **way, t_way *room, int steps);
-t_way					*extract_way(t_lem_in *game, int num, char *visit, int *steps);
+t_way					*extract_way(t_lem_in *game, int num, char *visit,
+						int *steps);
 t_way					*create_room(t_lem_in *game, int num, char *visit);
 void					clean_room_inway(t_way *head);
 int						check_rooms(t_bug *ant, int n, int end);
-void					choose_way(t_route *way, t_bug *ant, int *ants, int end);
+void					choose_way(t_route *way, t_bug *ant, int *ants,
+						int end);
 void					move_futher(t_bug *ant);
-void					print_moves(t_lem_in *game, t_bug *ant, int ants, char *finish);
+void					print_moves(t_lem_in *game, t_bug *ant, int ants,
+						char *finish);
 t_bug					*create_ants(t_lem_in *game);
 void					move_ants(t_lem_in *game, t_route *way);
 void					clean_way(t_route *way);

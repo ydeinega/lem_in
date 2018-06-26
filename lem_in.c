@@ -80,7 +80,7 @@ void	visit_room(t_lem_in *game, t_lst *queue, char *visit)
 			visit[links->num] = IN_QUEUE;
 			add_to_queue(queue_elem(links->num), game->end);
 			add_to_ways(&(game->room[links->num]), queue->num);
-		}		
+		}
 		else if (visit[links->num] == IN_QUEUE)
 			add_to_ways(&(game->room[links->num]), queue->num);
 		links = links->next;
@@ -106,7 +106,7 @@ int		lem_in(t_lem_in *game)
 		visit_room(game, queue, visit);
 		tmp = queue;
 		queue = queue->next;
-		free (tmp);
+		free(tmp);
 	}
 	visit = ft_memset(visit, NOT_VISITED, game->room_num);
 	if (!find_ways(game, visit))
