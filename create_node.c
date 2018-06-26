@@ -32,7 +32,7 @@ t_room_lst	*create_node(char *line, int *type)
 	return (node);
 }
 
-int			add_node_lst(t_room_lst **head, t_room_lst *node)
+int			add_node_lst(t_room_lst **head, t_room_lst *node, t_lem_in *game)
 {
 	t_room_lst	*tmp;
 	int			check;
@@ -44,14 +44,18 @@ int			add_node_lst(t_room_lst **head, t_room_lst *node)
 		tmp = *head;
 		while (tmp->next)
 		{
-			if (ft_strequ(tmp->name, node->name)
-				|| (tmp->pt.i == node->pt.i && tmp->pt.j == node->pt.j))
+			if (ft_strequ(tmp->name, node->name) || (tmp->pt == node->pt))
+			{
+				game->error = 11;
 				return (0);
+			}
 			tmp = tmp->next;
 		}
-		if (ft_strequ(tmp->name, node->name)
-			|| (tmp->pt.i == node->pt.i && tmp->pt.j == node->pt.j))
+		if (ft_strequ(tmp->name, node->name) || (tmp->pt == node->pt))
+		{
+			game->error = 11;
 			return (0);
+		}
 		tmp->next = node;
 	}
 	return (1);

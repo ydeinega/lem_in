@@ -34,13 +34,24 @@ int		check_link_str(char *line)
 
 int		link_valid(char *line, t_lem_in *game, int *type)
 {
+	int ret;
+
+	if (*type == ANTS)
+		game->error = !game->ants ? 5 : 6;
+	if (*type == START || *type == END)
+		game->error = 3;
+	if (!(ret = check_link_str(line)))
+		game->error = 1;
 	if (*type == ANTS || *type == START ||
-		*type == END || !check_link_str(line))
+		*type == END || !ret)
 		return (0);
 	if (*type != LINK)
 	{
 		if (!game->start || !game->end)
+		{
+			game->error = 3;
 			return (0);
+		}
 		*type = LINK;
 		create_room_array(game);
 	}
@@ -55,15 +66,26 @@ int		ants_valid(char *line, t_lem_in *game, int *type)
 
 	i = -1;
 	if (*type != ANTS || game->ants != 0)
+	{
+		game->error = 12;
 		return (0);
+	}
 	while (line[++i])
 	{
 		if (!ft_isdigit(line[i]))
+		{
+			game->error = 2;
 			return (0);
+		}
 	}
 	if (!check_if_int(ft_strdup(line)))
+	{
+		game->error = 2;
 		return (0);
+	}
 	game->ants = ft_atoi(line);
+	if (!game->ants)
+		game->error = 5;
 	return (game->ants > 0 ? 1 : 0);
 }
 
@@ -72,14 +94,24 @@ int		command_valid(char *line, t_lem_in *game, int *type)
 	if (ft_strequ(line, "##start"))
 	{
 		if (*type == LINK || game->start != 0 || !game->ants)
+		{
+			game->error = *type == LINK ? 12 : game->error;
+			game->error = game->start != 0 ? 4 : game->error;
+			game->error = !game->ants ? 5 : game->error;
 			return (0);
+		}
 		*type = START;
 		game->start = 1;
 	}
 	if (ft_strequ(line, "##end"))
 	{
 		if (*type == LINK || game->end != 0 || !game->ants)
+		{
+			game->error = *type == LINK ? 12 : game->error;
+			game->error = game->end != 0 ? 4 : game->error;
+			game->error = !game->ants ? 5 : game->error;
 			return (0);
+		}
 		*type = END;
 		game->end = 1;
 	}

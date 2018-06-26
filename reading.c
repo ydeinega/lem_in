@@ -20,7 +20,10 @@ void		error(char *line, char *ptr, t_lem_in *game)
 		ft_strdel(&ptr);
 	if (game)
 		clean_game(game);
-	ft_printf("ERROR\n");
+	if (game->error >= 0)
+		ft_printf("ERROR: %s\n", g_error[game->error]);
+	else
+		ft_printf("ERROR\n");
 	exit(1);
 }
 
@@ -73,6 +76,7 @@ t_lem_in	*create_game(void)
 	game->room_num = 0;
 	game->start = 0;
 	game->end = 0;
+	game->error = -1;
 	game->node = NULL;
 	game->room = NULL;
 	game->info = NULL;
@@ -88,16 +92,21 @@ int			main(void)
 
 	line = NULL;
 	type = ANTS;
-	if (!(game = create_game()))
-		error(line, NULL, game);
+	game = create_game();
 	while ((ret = get_next_line(0, &line)) > 0)
 	{
 		reading_lem_in(line, game, &type);
 		ft_strdel(&line);
 	}
 	if (ret < 0 || type != LINK)
+	{
+		game->error = ret < 0 ? 8 : 7;
 		error(line, NULL, game);
+	}
 	if (!lem_in(game))
+	{
+		game->error = 10;
 		error(line, NULL, game);
+	}
 	clean_game(game);
 }

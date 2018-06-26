@@ -24,7 +24,10 @@ int			manage_links(t_lem_in *game, char *line)
 	name1 = ft_strsub(line, 0, i);
 	name2 = ft_strdup(&line[i + 1]);
 	if (!check_links(game, name1, name2))
+	{
+		game->error = 13;
 		return (0);
+	}
 	return (1);
 }
 

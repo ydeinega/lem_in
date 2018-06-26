@@ -72,16 +72,22 @@ int		check_room_str(char *line)
 int		room_valid(char *line, t_lem_in *game, int *type)
 {
 	t_room_lst	*node;
+	int			ret;
 
 	node = NULL;
-	if (*type == LINK || !check_room_str(line) || !game->ants)
+	if (*type == LINK || !(ret = check_room_str(line)) || !game->ants)
+	{
+		game->error = *type == LINK ? 12 : game->error;
+		game->error = !ret ? 0 : game->error;
+		game->error = !game->ants ? 5 : game->error;
 		return (0);
+	}
 	if (!game->node)
 		game->node = create_node(line, type);
 	else
 	{
 		node = create_node(line, type);
-		if (!add_node_lst(&(game->node), node))
+		if (!add_node_lst(&(game->node), node, game))
 		{
 			ft_strdel(&(node->name));
 			free(node);
