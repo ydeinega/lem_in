@@ -24,23 +24,7 @@
 # define NOT_FINISHED 8
 # define FINISHED 9
 
-char					*g_error[14] =
-{
-	"invalid room",
-	"invalid link",
-	"invalid ant",
-	"no start/end",
-	"multiple start/end",
-	"no ants",
-	"no rooms",
-	"no links",
-	"reading failed",
-	"empty file",
-	"no possible way found",
-	"same room name and/or coordinate",
-	"invalid order",
-	"invalid link (no such room name)"
-};
+extern char				*g_error[14];
 
 typedef struct			s_coord
 {
@@ -117,7 +101,8 @@ int						check_link_str(char *line);
 int						ants_valid(char *line, t_lem_in *game, int *type);
 int						command_valid(char *line, t_lem_in *game, int *type);
 t_room_lst				*create_node(char *line, int *type);
-int						add_node_lst(t_room_lst **head, t_room_lst *node, t_lem_in *game);
+int						add_node_lst(t_room_lst **head, t_room_lst *node,
+						t_lem_in *game);
 void					create_room_array(t_lem_in *game);
 int						manage_links(t_lem_in *game, char *line);
 int						check_links(t_lem_in *game, char *name1, char *name2);
@@ -148,7 +133,7 @@ void					print_moves(t_lem_in *game, t_bug *ant, int ants,
 t_bug					*create_ants(t_lem_in *game);
 void					move_ants(t_lem_in *game, t_route *way);
 void					clean_way(t_route *way);
-int						coord_cmp(t_coord a, t_coord b);
+int						pt_cmp(t_coord a, t_coord b);
 #endif
 
 /*

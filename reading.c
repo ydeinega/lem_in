@@ -12,6 +12,24 @@
 
 #include "lem_in.h"
 
+char		*g_error[14] =
+{
+	"invalid room",
+	"invalid link",
+	"invalid ant",
+	"no start/end",
+	"multiple start/end",
+	"no ants",
+	"no rooms",
+	"no links",
+	"reading failed",
+	"empty file",
+	"no possible way found",
+	"same room name and/or coordinate",
+	"invalid order",
+	"invalid link (no such room name)"
+};
+
 void		error(char *line, char *ptr, t_lem_in *game)
 {
 	if (line)

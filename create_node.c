@@ -32,7 +32,7 @@ t_room_lst	*create_node(char *line, int *type)
 	return (node);
 }
 
-int			coord_cmp(t_coord a, t_coord b)
+int			pt_cmp(t_coord a, t_coord b)
 {
 	if (a.i == b.i && a.j == b.j)
 		return (1);
@@ -51,14 +51,14 @@ int			add_node_lst(t_room_lst **head, t_room_lst *node, t_lem_in *game)
 		tmp = *head;
 		while (tmp->next)
 		{
-			if (ft_strequ(tmp->name, node->name) || coord_cmp(tmp->pt, node->pt))
+			if (ft_strequ(tmp->name, node->name) || pt_cmp(tmp->pt, node->pt))
 			{
 				game->error = 11;
 				return (0);
 			}
 			tmp = tmp->next;
 		}
-		if (ft_strequ(tmp->name, node->name) || coord_cmp(tmp->pt, node->pt))
+		if (ft_strequ(tmp->name, node->name) || pt_cmp(tmp->pt, node->pt))
 		{
 			game->error = 11;
 			return (0);

@@ -90,8 +90,7 @@ int		room_valid(char *line, t_lem_in *game, int *type)
 		node = create_node(line, type);
 		if (!add_node_lst(&(game->node), node, game))
 		{
-			ft_strdel(&(node->name));
-			free(node);
+			clean_node(node);
 			return (0);
 		}
 	}
